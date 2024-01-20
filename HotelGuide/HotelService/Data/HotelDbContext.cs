@@ -24,7 +24,7 @@ namespace HotelService.Data
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=.;Database=HotelGuideDB;Trusted_Connection=True");
+                optionsBuilder.UseSqlServer("Server=.;Database=HotelDB;Trusted_Connection=True");
             }
         }
 
