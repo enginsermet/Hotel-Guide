@@ -1,15 +1,16 @@
 {
   "version": 2,
-  "dgSpecHash": "89SNmx3gHsuuVdJUZxlKAXJI6FyOrGlAk1APF8RjawqS3s0pk0Rpg2BCWvxZk+fz3x7lNjXg0y0O9g6YkUXa7Q==",
+  "dgSpecHash": "JTrHAwDTnmu8zx9elqOPp4i6hq59/IzBu1U+3NBP7oWnqm9KmBNAXNiGSU0dcGqu4r/QsdJsC04vWa764yQ66w==",
   "success": true,
   "projectFilePath": "C:\\Users\\Engin\\Desktop\\Hotel-Guide\\HotelGuide\\ReportService\\ReportService.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Engin\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\Engin\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\Engin\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",
     "C:\\Users\\Engin\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\Engin\\.nuget\\packages\\microsoft.aspnetcore.openapi\\7.0.15\\microsoft.aspnetcore.openapi.7.0.15.nupkg.sha512",
     "C:\\Users\\Engin\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
-    "C:\\Users\\Engin\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
+    "C:\\Users\\Engin\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\Engin\\.nuget\\packages\\microsoft.data.sqlclient\\5.1.1\\microsoft.data.sqlclient.5.1.1.nupkg.sha512",
     "C:\\Users\\Engin\\.nuget\\packages\\microsoft.data.sqlclient.sni.runtime\\5.1.0\\microsoft.data.sqlclient.sni.runtime.5.1.0.nupkg.sha512",
     "C:\\Users\\Engin\\.nuget\\packages\\microsoft.entityframeworkcore\\7.0.15\\microsoft.entityframeworkcore.7.0.15.nupkg.sha512",

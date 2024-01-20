@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "hSVNuFYxU31avp+/LxQ05A2P2lnlc8jyZzE8pKmngchsL61JEQ8wgbwxVdKUEMIH2Nke65lCPJIXNpt6qv+BWA==",
+  "dgSpecHash": "iGx/JqA+fO/AxhCRR2Yytt2Nv0N3qbichNjefeqOlVdM4IKx5uZK1xCXYcvx4ffRYubyuxN5RurKa0kAg/GxNQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\Engin\\Desktop\\Hotel-Guide\\HotelGuide\\HotelService\\HotelService.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Engin\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\Engin\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\Engin\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",
     "C:\\Users\\Engin\\.nuget\\packages\\humanizer\\2.14.1\\humanizer.2.14.1.nupkg.sha512",
@@ -72,7 +73,7 @@
     "C:\\Users\\Engin\\.nuget\\packages\\microsoft.codeanalysis.razor\\6.0.11\\microsoft.codeanalysis.razor.6.0.11.nupkg.sha512",
     "C:\\Users\\Engin\\.nuget\\packages\\microsoft.codeanalysis.scripting.common\\4.4.0\\microsoft.codeanalysis.scripting.common.4.4.0.nupkg.sha512",
     "C:\\Users\\Engin\\.nuget\\packages\\microsoft.codeanalysis.workspaces.common\\4.4.0\\microsoft.codeanalysis.workspaces.common.4.4.0.nupkg.sha512",
-    "C:\\Users\\Engin\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
+    "C:\\Users\\Engin\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\Engin\\.nuget\\packages\\microsoft.data.sqlclient\\5.1.1\\microsoft.data.sqlclient.5.1.1.nupkg.sha512",
     "C:\\Users\\Engin\\.nuget\\packages\\microsoft.data.sqlclient.sni.runtime\\5.1.0\\microsoft.data.sqlclient.sni.runtime.5.1.0.nupkg.sha512",
     "C:\\Users\\Engin\\.nuget\\packages\\microsoft.diasymreader\\1.4.0\\microsoft.diasymreader.1.4.0.nupkg.sha512",
