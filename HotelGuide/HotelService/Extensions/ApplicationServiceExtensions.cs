@@ -1,4 +1,5 @@
 ﻿using HotelService.Data;
+using MassTransit;
 using Microsoft.EntityFrameworkCore;
 
 namespace HotelService.Extensions
@@ -10,6 +11,11 @@ namespace HotelService.Extensions
             services.AddDbContext<HotelDbContext>(options =>
             {
                 options.UseSqlServer(config.GetConnectionString("DefaultConnection"));
+            });
+
+            services.AddMassTransit(x =>
+            {
+                x.UsingRabbitMq();
             });
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

@@ -29,4 +29,8 @@
     <Folder Include="Controllers\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Shared\HotelGuide.Shared\HotelGuide.Shared.csproj" />
+  </ItemGroup>
+
 </Project>

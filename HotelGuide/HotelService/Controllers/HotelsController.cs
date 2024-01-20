@@ -9,6 +9,8 @@ using HotelService.Data;
 using HotelService.Entities;
 using HotelService.DTOs;
 using AutoMapper;
+using HotelGuide.Shared.Messages;
+using MassTransit;
 
 namespace HotelService.Controllers
 {
@@ -18,11 +20,15 @@ namespace HotelService.Controllers
     {
         private readonly HotelDbContext _context;
         private readonly IMapper _mapper;
+        private readonly IPublishEndpoint _publishEndpoint;
+        private readonly ILogger _logger;
 
-        public HotelsController(HotelDbContext context, IMapper mapper)
+        public HotelsController(HotelDbContext context, IMapper mapper, IPublishEndpoint publishEndpoint, ILogger logger)
         {
             _context = context;
             _mapper = mapper;
+            _publishEndpoint = publishEndpoint;
+            _logger = logger;
         }
 
         // GET: api/Hotels
@@ -128,6 +134,49 @@ namespace HotelService.Controllers
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("CreateHotel", new { id = hotel.UUID }, hotel);
+        }
+
+        [HttpPost]
+        [ActionName("Report")]
+        public async Task<IActionResult> CreateReport(CreateReportDto createReportDto)
+        {
+            _logger.Log(LogLevel.Information, $"Report has been created at{createReportDto.DateRequested}");
+
+            if (createReportDto is not null)
+            {
+                int numOfHotels = 0;
+
+                var numbersAtLocation = _context.Contacts.Where(a => a.Location == createReportDto.Location).ToList();
+
+                var hotels = _context.Hotels.Include(a => a.ContactInformation).ToList();
+
+                foreach (var hotel in hotels)
+                {
+                    foreach (var contact in hotel.ContactInformation.DistinctBy(a => a.HotelId))
+                    {
+                        if (contact.Location == createReportDto.Location)
+                        {
+                            numOfHotels++;
+                        }
+                    }
+                }
+
+                createReportDto.NumHotels = numOfHotels;
+                createReportDto.NumPhoneNumbers = numbersAtLocation.Count();
+
+                await _publishEndpoint.Publish<ReportCreated>(new
+                {
+                    createReportDto.UUID,
+                    createReportDto.Location,
+                    createReportDto.DateRequested,
+                    createReportDto.NumHotels,
+                    createReportDto.NumPhoneNumbers,
+                    createReportDto.Status,
+                });
+                return Ok("The message has been sent to the consumer"); ;
+            }
+            return BadRequest();
+
         }
 
         // DELETE: api/Hotels/5
