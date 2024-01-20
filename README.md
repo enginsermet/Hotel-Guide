@@ -202,5 +202,25 @@ Before interacting with the API, make sure the Report Service ASP.NET Core proje
 - The API uses AutoMapper for mapping between DTOs and entities.
 - Ensure that the `ReportDbContext` is configured correctly, and the `Reports` entity set is available.
 
+# Setting up RabbitMQ with Docker
+
+To use RabbitMQ with the Report Service ASP.NET Core project, you can follow these steps to run RabbitMQ in a Docker container. Below is the `docker run` command:
+
+```bash
+docker run -d --hostname my-rabbit --name report-rabbit -p 15672:15672 -p 5672:5672 rabbitmq:3-management
+```
+
+## Prerequisites:
+
+Before running this command, ensure that you have Docker installed on your machine. You can download Docker from [https://www.docker.com/get-started](https://www.docker.com/get-started).
+
+## Running RabbitMQ Container:
+
+Execute the above `docker run` command in your terminal or command prompt to start the RabbitMQ container. Once the container is running, you can access the RabbitMQ Management UI by navigating to [http://localhost:15672/](http://localhost:15672/) in your web browser.
+
+- **Username:** guest
+- **Password:** guest
+
+
 
 
