@@ -7,39 +7,48 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using HotelService.Data;
 using HotelService.Entities;
+using HotelService.DTOs;
+using AutoMapper;
 
 namespace HotelService.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class HotelsController : ControllerBase
     {
         private readonly HotelDbContext _context;
+        private readonly IMapper _mapper;
 
-        public HotelsController(HotelDbContext context)
+        public HotelsController(HotelDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         // GET: api/Hotels
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Hotel>>> GetHotels()
+        [ActionName("Officials")]
+        public async Task<ActionResult<IEnumerable<HotelDto>>> GetHotels()
         {
-          if (_context.Hotels == null)
-          {
-              return NotFound();
-          }
-            return await _context.Hotels.ToListAsync();
+            if (_context.Hotels == null)
+            {
+                return NotFound();
+            }
+            List<HotelDto> hotels = new List<HotelDto>();
+
+            foreach (var hotel in await _context.Hotels.ToListAsync())
+            {
+                hotels.Add(_mapper.Map<HotelDto>(hotel));
+            }
+            return hotels;
         }
 
-        // GET: api/Hotels/5
+        // GET: api/Hotels/Details/5
+        //Returns detailed information about the hotel, including contact information
         [HttpGet("{id}")]
-        public async Task<ActionResult<Hotel>> GetHotel(Guid id)
+        [ActionName("Details")]
+        public async Task<ActionResult<HotelDetailsDto>> GetHotelDetails(Guid id)
         {
-          if (_context.Hotels == null)
-          {
-              return NotFound();
-          }
             var hotel = await _context.Hotels.FindAsync(id);
 
             if (hotel == null)
@@ -47,20 +56,37 @@ namespace HotelService.Controllers
                 return NotFound();
             }
 
-            return hotel;
+            HotelDetailsDto hotelDetailsDto = new HotelDetailsDto();
+
+            _mapper.Map(hotel, hotelDetailsDto);
+
+            foreach (var contact in await _context.Contacts.Where(c => c.HotelId == id).ToListAsync())
+            {
+                hotelDetailsDto.ContactInformation.Add(_mapper.Map<ContactInfoDto>(contact));
+            }
+
+            if (hotelDetailsDto == null)
+            {
+                return NotFound();
+            }
+
+            return hotelDetailsDto;
         }
 
         // PUT: api/Hotels/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutHotel(Guid id, Hotel hotel)
+        [ActionName("Update")]
+        public async Task<IActionResult> PutHotel(Guid id, HotelDto hotelDto)
         {
-            if (id != hotel.UUID)
+            var hotel = await _context.Hotels.FindAsync(id);
+
+            if (hotel == null)
             {
                 return BadRequest();
             }
 
-            _context.Entry(hotel).State = EntityState.Modified;
+            _mapper.Map(hotelDto, hotel);
+            _context.Hotels.Update(hotel);
 
             try
             {
@@ -81,23 +107,32 @@ namespace HotelService.Controllers
             return NoContent();
         }
 
-        // POST: api/Hotels
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        //POST: api/Hotels
+        //Creates a new hotel record
         [HttpPost]
-        public async Task<ActionResult<Hotel>> PostHotel(Hotel hotel)
+        [ActionName("Create")]
+        public async Task<ActionResult<CreateHotelDto>> PostHotel(CreateHotelDto createHotelDto)
         {
-          if (_context.Hotels == null)
-          {
-              return Problem("Entity set 'HotelDbContext.Hotels'  is null.");
-          }
+            if (createHotelDto == null)
+            {
+                return BadRequest();
+            }
+            var hotel = _mapper.Map<Hotel>(createHotelDto);
+            hotel.UUID = Guid.NewGuid();
+
+            var contact = _mapper.Map<ContactInfo>(createHotelDto);
+            contact.Id = Guid.NewGuid();
+            contact.HotelId = hotel.UUID;
             _context.Hotels.Add(hotel);
+            _context.Contacts.Add(contact);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetHotel", new { id = hotel.UUID }, hotel);
+            return CreatedAtAction("CreateHotel", new { id = hotel.UUID }, hotel);
         }
 
         // DELETE: api/Hotels/5
         [HttpDelete("{id}")]
+        [ActionName("Delete")]
         public async Task<IActionResult> DeleteHotel(Guid id)
         {
             if (_context.Hotels == null)
