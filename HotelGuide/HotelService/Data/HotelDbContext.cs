@@ -11,14 +11,15 @@ namespace HotelService.Data
         public DbSet<Hotel> Hotels { get; set; }
         public DbSet<ContactInfo> Contacts { get; set; }
 
-        public HotelDbContext(DbContextOptions<HotelDbContext> options)
-            : base(options)
+        public HotelDbContext(DbContextOptions options) : base(options)
         {
         }
 
         public HotelDbContext()
         {
         }
+
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
