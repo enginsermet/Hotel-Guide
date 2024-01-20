@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "iGx/JqA+fO/AxhCRR2Yytt2Nv0N3qbichNjefeqOlVdM4IKx5uZK1xCXYcvx4ffRYubyuxN5RurKa0kAg/GxNQ==",
+  "dgSpecHash": "+uzmjNyfjIqWmUnAYG2OEn5wFzl6ZIOEDyB3yhnH7T2Xxifu2y6U+P/t+HxZHpQ8oQ3wHY5Tt7uOl78/PF6VdA==",
   "success": true,
   "projectFilePath": "C:\\Users\\Engin\\Desktop\\Hotel-Guide\\HotelGuide\\HotelService\\HotelService.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Engin\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
+    "C:\\Users\\Engin\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
     "C:\\Users\\Engin\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\Engin\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",
     "C:\\Users\\Engin\\.nuget\\packages\\humanizer\\2.14.1\\humanizer.2.14.1.nupkg.sha512",

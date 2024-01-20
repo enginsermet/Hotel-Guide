@@ -11,6 +11,9 @@ namespace HotelService.Extensions
             {
                 options.UseSqlServer(config.GetConnectionString("DefaultConnection"));
             });
+
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
             return services;
         }
     }
