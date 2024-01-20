@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ReportService.Data;
 
-namespace HotelService.Extensions
+namespace ReportService.Extensions
 {
     public static class ApplicationServiceExtensions
     {

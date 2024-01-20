@@ -1,4 +1,4 @@
-using HotelService.Extensions;
+using ReportService.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
