@@ -36,6 +36,7 @@ namespace ReportService.Consumers
             await Task.CompletedTask;
 
             _dbcontext.Reports.Add(report);
+            await _dbcontext.SaveChangesAsync();
         }
     }
 }

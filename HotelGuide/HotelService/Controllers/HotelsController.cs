@@ -10,6 +10,7 @@ using HotelService.Entities;
 using HotelService.DTOs;
 using AutoMapper;
 using HotelGuide.Shared.Messages;
+using HotelGuide.Shared.DTOs;
 using MassTransit;
 
 namespace HotelService.Controllers
@@ -21,9 +22,9 @@ namespace HotelService.Controllers
         private readonly HotelDbContext _context;
         private readonly IMapper _mapper;
         private readonly IPublishEndpoint _publishEndpoint;
-        private readonly ILogger _logger;
+        private readonly ILogger<CreateReportDto> _logger;
 
-        public HotelsController(HotelDbContext context, IMapper mapper, IPublishEndpoint publishEndpoint, ILogger logger)
+        public HotelsController(HotelDbContext context, IMapper mapper, IPublishEndpoint publishEndpoint, ILogger<CreateReportDto> logger)
         {
             _context = context;
             _mapper = mapper;
@@ -138,15 +139,15 @@ namespace HotelService.Controllers
 
         [HttpPost]
         [ActionName("Report")]
-        public async Task<IActionResult> CreateReport(CreateReportDto createReportDto)
+        public async Task<IActionResult> CreateReport(string location)
         {
-            _logger.Log(LogLevel.Information, $"Report has been created at{createReportDto.DateRequested}");
+            _logger.Log(LogLevel.Information, $"Report has been created for following location: {location}");
 
-            if (createReportDto is not null)
+            if (location is not null)
             {
                 int numOfHotels = 0;
 
-                var numbersAtLocation = _context.Contacts.Where(a => a.Location == createReportDto.Location).ToList();
+                var numbersAtLocation = _context.Contacts.Where(a => a.Location == location).ToList();
 
                 var hotels = _context.Hotels.Include(a => a.ContactInformation).ToList();
 
@@ -154,25 +155,25 @@ namespace HotelService.Controllers
                 {
                     foreach (var contact in hotel.ContactInformation.DistinctBy(a => a.HotelId))
                     {
-                        if (contact.Location == createReportDto.Location)
+                        if (contact.Location == location)
                         {
                             numOfHotels++;
                         }
                     }
                 }
 
-                createReportDto.NumHotels = numOfHotels;
-                createReportDto.NumPhoneNumbers = numbersAtLocation.Count();
-
-                await _publishEndpoint.Publish<ReportCreated>(new
+                CreateReportDto reportDto = new CreateReportDto
                 {
-                    createReportDto.UUID,
-                    createReportDto.Location,
-                    createReportDto.DateRequested,
-                    createReportDto.NumHotels,
-                    createReportDto.NumPhoneNumbers,
-                    createReportDto.Status,
-                });
+                    UUID = Guid.NewGuid(),
+                    DateRequested = DateTime.Now,
+                    Status = HotelGuide.Shared.DTOs.ReportStatus.Preparing,
+                    Location = location,
+                    NumHotels = numOfHotels,
+                    NumPhoneNumbers = numbersAtLocation.Count()
+                };
+
+
+                await _publishEndpoint.Publish<ReportCreated>(reportDto);
                 return Ok("The message has been sent to the consumer"); ;
             }
             return BadRequest();
